@@ -334,7 +334,10 @@ public class BreakoutState {
 	public void movePaddleLeft(int elapsedTime) {
 		Point ncenter = paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
 		if(paddle.getPaddleType()=='R') {
+			int hits = paddle.getHits();
 			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+			paddle.setHits(hits);
+			
 		}else { 
 			paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 		}

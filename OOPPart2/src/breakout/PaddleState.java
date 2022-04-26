@@ -52,4 +52,7 @@ public class PaddleState {
 	public int getHits() {
 		return 0;
 	}
+	
+	public void setHits(int hit) {
+	}
 }

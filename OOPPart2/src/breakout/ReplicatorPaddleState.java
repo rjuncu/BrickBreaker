@@ -13,14 +13,20 @@ public class ReplicatorPaddleState extends PaddleState{
 		return 'R';
 	}
 	
+	
 	@Override
 	public void hitPaddle(int hit) {
-		this.hits = (this.hits)+1;
+		hits = hit+1;
 	}
 	
 	@Override
 	public int getHits() {
 		return this.hits;
+	}
+	
+	@Override
+	public void setHits(int hits) {
+		this.hits = hits;
 	}
 
 }
