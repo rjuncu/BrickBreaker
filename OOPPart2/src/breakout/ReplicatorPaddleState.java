@@ -15,7 +15,7 @@ public class ReplicatorPaddleState extends PaddleState{
 	
 	@Override
 	public void hitPaddle(int hit) {
-		this.hits++;
+		this.hits = (this.hits)+1;
 	}
 	
 	@Override

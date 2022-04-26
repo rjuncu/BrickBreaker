@@ -12,7 +12,7 @@ public class BreakoutApplication {
 ##########
 ###!######
 ##########
-SSS!SSS!#R
+SSS!S##R##
      o
 
      =
