@@ -188,49 +188,69 @@ public class BreakoutState {
 
 	//EB: new paddle is created each time it is moved, resetting 'hits' to 0//
 	private Ball collideBallPaddle(Ball ball, Vector paddleVel) {
-		Vector nspeed = ball.bounceOn(paddle.getLocation());
+		Vector nspeed = ball.bounceOn(this.paddle.getLocation());
 		if(nspeed != null) {
 			nspeed = nspeed.plus(paddleVel.scaledDiv(5));
 			ball.setVelocity(nspeed);
 			Point ncenter = ball.getLocation().getCenter().plus(nspeed);
 			ball.setLocation(ball.getLocation().withCenter(ncenter));
 			
-			if(paddle.getPaddleType()=='R') {
+			if(this.paddle.getPaddleType()=='R') {
 				
 				switch(this.paddle.getHits()) {
 				case 0: 
-					Ball newBall1 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					Ball newBall2 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
-					Ball newBall3 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2, 2)));
-					ArrayList<Ball> tempBallsList1 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					tempBallsList1.add(newBall1);
-					tempBallsList1.add(newBall2);
-					tempBallsList1.add(newBall3);
-					this.balls = tempBallsList1.toArray(balls);
-					this.paddle.hitPaddle(this.paddle.getHits());
+//					Ball newBall1 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					Ball newBall2 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
+//					Ball newBall3 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2, 2)));
+//					ArrayList<Ball> tempBallsList1 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					tempBallsList1.add(newBall1);
+//					tempBallsList1.add(newBall2);
+//					tempBallsList1.add(newBall3);
+//					this.balls = tempBallsList1.toArray(balls);
+//					this.paddle.hitPaddle(this.paddle.getHits());
+					createBalls(new Vector(2,-2), ball);
+					createBalls(new Vector(-2,2), ball);
+					createBalls(new Vector(2,2), ball);
+					this.paddle.hitPaddle();
+					System.out.println(this.paddle.getHits());
 					break;
 				case 1: 
-					Ball newBall4 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					Ball newBall5 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
-					ArrayList<Ball> tempBallsList2 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					tempBallsList2.add(newBall4);
-					tempBallsList2.add(newBall5);
-					this.balls = tempBallsList2.toArray(balls);
-					this.paddle.hitPaddle(this.paddle.getHits());
+//					Ball newBall4 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					Ball newBall5 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
+//					ArrayList<Ball> tempBallsList2 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					tempBallsList2.add(newBall4);
+//					tempBallsList2.add(newBall5);
+//					this.balls = tempBallsList2.toArray(balls);
+//					this.paddle.hitPaddle(this.paddle.getHits());
+					createBalls(new Vector(2, -2), ball);
+					createBalls(new Vector(-2, 2), ball);
+					this.paddle.hitPaddle();
 					break;
 				case 2: 
-					Ball newBall6 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					ArrayList<Ball> tempBallsList3 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					tempBallsList3.add(newBall6);
-					this.balls = tempBallsList3.toArray(balls);
-					this.paddle.hitPaddle(this.paddle.getHits());
+//					Ball newBall6 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					ArrayList<Ball> tempBallsList3 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					tempBallsList3.add(newBall6);
+//					this.balls = tempBallsList3.toArray(balls);
+//					this.paddle.hitPaddle(this.paddle.getHits());
+					createBalls(new Vector(2, -2), ball);
+					this.paddle = new PaddleState(this.paddle.getCenter());
+					this.paddle.hitPaddle();
 					break;
 				default:
-					this.paddle= new PaddleState(this.paddle.getCenter());
+//					this.paddle= new PaddleState(this.paddle.getCenter());
+					break;
 			}}
 			
 			
-	}return ball;}
+	}
+		return ball;}
+	
+	private void createBalls(Vector speed, Ball originalBall) {
+		Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
+		ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(getBalls()));
+		tempBallsList.add(newBall);
+		this.balls = tempBallsList.toArray(balls);
+	}
 
 	private boolean removeBlock(BlockState block) {
 		boolean broken = true;
@@ -255,6 +275,8 @@ public class BreakoutState {
 	 * @mutates this
 	 */
 	public void tick(int paddleDir, int elapsedTime) {
+		System.out.println(elapsedTime);
+
 		stepBalls();
 		bounceBallsOnWalls();
 		removeDeadBalls();
@@ -316,11 +338,14 @@ public class BreakoutState {
 	 */
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleRight(int elapsedTime) {
-		Point ncenter = paddle.getCenter().plus(PADDLE_VEL);
-		if(paddle.getPaddleType()=='R') {
-			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL);
+		if(this.paddle.getPaddleType()=='R') {
+			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+			newPaddle.setHits(this.paddle.getHits());
+			this.paddle = newPaddle;
+//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 		}else {
-			paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 		}
 	}
 
@@ -332,14 +357,16 @@ public class BreakoutState {
 	 */
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleLeft(int elapsedTime) {
-		Point ncenter = paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
-		if(paddle.getPaddleType()=='R') {
-			int hits = paddle.getHits();
-			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-			paddle.setHits(hits);
+		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
+		if(this.paddle.getPaddleType()=='R') {
+			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+			newPaddle.setHits(this.paddle.getHits());
+			this.paddle = newPaddle;
+//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//			paddle.setHits(paddle.getHits());
 			
 		}else { 
-			paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 		}
 	}
 

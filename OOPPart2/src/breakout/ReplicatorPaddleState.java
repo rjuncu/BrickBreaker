@@ -2,7 +2,7 @@ package breakout;
 
 public class ReplicatorPaddleState extends PaddleState{
 
-	private int hits;
+	private int hits = 0;
 	public ReplicatorPaddleState(Point center) {
 		super(center);
 		// TODO Auto-generated constructor stub
@@ -15,8 +15,8 @@ public class ReplicatorPaddleState extends PaddleState{
 	
 	
 	@Override
-	public void hitPaddle(int hit) {
-		hits = hit+1;
+	public void hitPaddle() {
+		this.hits = this.hits+1;
 	}
 	
 	@Override

@@ -46,13 +46,13 @@ public class PaddleState {
 	public char getPaddleType() {
 		return 'N';
 	}
-	public void hitPaddle(int hit) {
+	public void hitPaddle() {
 	}
 	
 	public int getHits() {
 		return 0;
 	}
 	
-	public void setHits(int hit) {
+	public void setHits(int hits) {
 	}
 }
