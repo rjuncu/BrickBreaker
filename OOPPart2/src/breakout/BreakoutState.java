@@ -160,8 +160,8 @@ public class BreakoutState {
 		b.setLocation(loc);
 		return b;
 	}
-	temptimer
-	private Ball collideBallBlocks(Ball ball, int elapsedTime) {
+	
+	private Ball collideBallBlocks(Ball ball) {
 		for(BlockState block : blocks) {
 			Vector nspeed = ball.bounceOn(block.getLocation());
 			if(nspeed != null) {
@@ -169,8 +169,8 @@ public class BreakoutState {
 					block.hitBlock(1);
 				}
 				if (block.getBlockType()=='!') {
-					ball = new SuperChargedBall(ball.getLocation(), ball.getVelocity());
-					//ball.startimer(elapsedtime)
+					ball = new SuperChargedBall(ball.getLocation(), ball.getVelocity(),0);
+
 				}
 				if (block.getBlockType()=='R') {
 					this.paddle=new ReplicatorPaddleState(this.paddle.getCenter());
@@ -277,18 +277,22 @@ public class BreakoutState {
 	 */
 	private long totalTime =0;
 	public void tick(int paddleDir, int elapsedTime) {
-		//System.out.println(elapsedTime);
-		//ball.checktimer()
-		totalTime = elapsedTime+totalTime;
-		if(totalTime >=10000) {
-		}
+
 		stepBalls();
 		bounceBallsOnWalls();
 		removeDeadBalls();
-		bounceBallsOnBlocks(elapsedTime);
+		bounceBallsOnBlocks();
 		bounceBallsOnPaddle(paddleDir);
 		clampBalls();
+		for(int i = 0; i < balls.length; ++i) {
+			if(balls[i] != null) {
+				if (balls[i].checkElapsedTime(elapsedTime) == true) {
+					this.balls[i] = new NormalBall(this.balls[i].getLocation(), this.balls[i].getVelocity());
+				};
+			}
+		
 		balls = Arrays.stream(balls).filter(x -> x != null).toArray(Ball[]::new);
+	}
 	}
 
 	private void clampBalls() {
@@ -308,10 +312,10 @@ public class BreakoutState {
 		}
 	}
 
-	private void bounceBallsOnBlocks(int elapsedTime) {
+	private void bounceBallsOnBlocks() {
 		for(int i = 0; i < balls.length; ++i) {
 			if(balls[i] != null) {
-				balls[i] = collideBallBlocks(balls[i], elapsedTime);
+				balls[i] = collideBallBlocks(balls[i]);
 			}
 		}
 	}

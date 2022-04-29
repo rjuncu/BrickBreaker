@@ -81,8 +81,8 @@ public abstract class Ball {
 		 return 'X';
 	 }
 	 
-	 //checktimer()
-	 //if timer!=0
-	 //find a way to change ball type to normal 
-	 //breakoutState.changeballType(this)
+	 public boolean checkElapsedTime(int elapsedtime) {
+			return false;
+		}
+
 }

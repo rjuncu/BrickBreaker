@@ -1,9 +1,12 @@
 package breakout;
 
 public class SuperChargedBall extends Ball{
+	
+	int totalElapsedTime;
 
-	public SuperChargedBall(Circle location, Vector velocity) {
+	public SuperChargedBall(Circle location, Vector velocity, int totalElapsedTime) {
 		super(location, velocity);
+		this.totalElapsedTime = totalElapsedTime; 
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -21,10 +24,13 @@ public class SuperChargedBall extends Ball{
 		return 'S';
 	}
 	
+	//feed and return the ball instead?
 	@Override
-	public Boolean checkElapsedTime(int elapsedtime) {
-		
+	public boolean checkElapsedTime(int elapsedtime) {
+		this.totalElapsedTime = this.totalElapsedTime + elapsedtime;
+		if (totalElapsedTime >= 10000) {
+			return true;
+		} else {
+			return false;
 	}
-	
-
-}
+}}
