@@ -80,4 +80,8 @@ public abstract class Ball {
 	 public char getBallType() {
 		 return 'X';
 	 }
+	 
+	 public Boolean checkElapsedTime(int elapsedTime) {
+		 return null;
+	 }
 }

@@ -20,5 +20,11 @@ public class SuperChargedBall extends Ball{
 	public char getBallType() {
 		return 'S';
 	}
+	
+	@Override
+	public Boolean checkElapsedTime(int elapsedtime) {
+		
+	}
+	
 
 }
