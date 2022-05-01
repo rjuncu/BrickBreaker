@@ -84,16 +84,6 @@ public abstract class Ball {
 		return getLocation().getCenter();
 	}
 	
-//	/**
-//	 * Mirror this ball's velocity when colliding with a block.
-//	 * @param rect
-//	 * @param destroyed
-//	 * @return
-//	 */
-//	 public Vector hitBlock(Rect rect, boolean destroyed) {
-//		 System.out.println(bounceOn(rect));
-//		 return bounceOn(rect);
-//	 }
 	 
 	 /**
 	  * Return false since this block object does not require a timer.

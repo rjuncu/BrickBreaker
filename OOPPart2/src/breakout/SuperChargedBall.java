@@ -53,21 +53,7 @@ public class SuperChargedBall extends Ball{
 		}
 		return null;
 	}
-//	public Vector bounceOn(Rect rect, boolean notUsed) {
-//		Vector coldir = rect.collideWith(location);
-//		if(coldir != null && velocity.product(coldir) > 0) {
-//			return velocity.mirrorOver(coldir);
-//		}
-//		return null;
 
-	//	@Override
-	//	public Vector hitBlock(Rect rect, boolean destroyed) {
-	//		if (destroyed == false) {
-	//			return bounceOn(rect);
-	//		}else {
-	//			return getVelocity();
-	//		}
-	//	}
 
 	//feed and return the ball instead?
 	/**
