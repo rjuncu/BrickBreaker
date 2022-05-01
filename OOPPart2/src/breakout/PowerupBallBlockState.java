@@ -13,6 +13,7 @@ public class PowerupBallBlockState extends BlockState{
 	/**
 	 * Construct a block occupying a given rectangle in the field.
 	 * @pre | location != null
+	 * @pre | (hits < 4) && (hits > -2)
 	 * @post | getLocation().equals(location)
 	 */
 	public PowerupBallBlockState(Rect location, int hits) {
@@ -23,6 +24,8 @@ public class PowerupBallBlockState extends BlockState{
 	 * Return an object of class SuperChargedBall.
 	 * @param ball
 	 * @creates | result
+	 * @pre | ball != null 
+	 * @post | (result.getLocation() == ball.getLocation()) && (result.getVelocity() == ball.getVelocity())
 	 */
 	@Override
 	public Ball makeSuper(Ball ball) {
@@ -31,7 +34,8 @@ public class PowerupBallBlockState extends BlockState{
 	
 	/**
 	 * Return this block's color.
-	 * @return
+	 * @return result 
+	 * @post | result != null
 	 */
 	@Override
 	public Color getColor() {
@@ -41,7 +45,8 @@ public class PowerupBallBlockState extends BlockState{
 	@Override 
 	/**
 	 * Return a copy of this block.
-	 * @return
+	 * @creates result 
+	 * @post | (result.getLocation() == this.getLocation()) && (result.getHits() == this.getHits())
 	 */
 	public BlockState makeCopyBlock(int change) {
 		return new PowerupBallBlockState(getLocation(), getHits());

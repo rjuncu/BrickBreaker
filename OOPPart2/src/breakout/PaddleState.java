@@ -56,22 +56,48 @@ public class PaddleState {
 //	}
 
 	/**
-	 * Create a new object 
+	 * Create a new PaddleState object with a desired center.
 	 * @param ncenter
 	 * @param internalField
 	 * @param hits
-	 * @return
+	 * @creates result
+	 * @post result.getCenter()==(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter))
 	 */
 	public PaddleState setTypePaddle(Point ncenter, Rect internalField) {
 		return new PaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 	}
 	
+	/**
+	 * Return a list of all the objects of type Ball.
+	 * @param ball
+	 * @param balls
+	 * @return result == balls
+	 */
 	public Ball[] replicateBall(Ball ball, Ball[] balls) {
-		return balls;
-		
+		return balls;	
 	};
 	
+	/**
+	 * Return null since this paddle does not record hits.
+	 * @return null
+	 */
+	public PaddleState incrementPaddleHits(PaddleState paddle) {
+		return null;
+	}
+	
+	/**
+	 * Returns the color of this paddle.
+	 * @return result
+	 */
 	public Color getColor() {
 		return Color.red;
+	}
+	
+	/**
+	 * Return -1 since this paddle does not record hits.
+	 * @return
+	 */
+	public int getHits() {
+		return -1;
 	}
 }

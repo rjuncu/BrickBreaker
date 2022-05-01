@@ -42,7 +42,7 @@ class BallTest {
 		n1 = new NormalBall(c052, v1010);
 		s1 = new SuperChargedBall(c389, v1010,ten);
 		balls = new Ball[] {n1,s1};
-		
+
 	}
 
 	@Test
@@ -52,10 +52,10 @@ class BallTest {
 		assertEquals(v1010, n1.getVelocity());
 	}
 
-	@Test
-	void testBounceOn() {
-		assertEquals(new Vector(-10,10),n1.bounceOn(r1138));
-	}
+//	@Test
+//	void testBounceOn() {
+//		assertEquals(new Vector(-10,10),n1.bounceOn(r1138));
+//	}
 	
 	@Test
 	void testCheckElapsedTime() {

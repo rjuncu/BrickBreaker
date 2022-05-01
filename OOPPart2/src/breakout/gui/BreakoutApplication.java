@@ -5,13 +5,14 @@ import javax.swing.JFrame;
 
 import breakout.BreakoutState;
 import breakout.GameMap;
+import breakout.NormalBlockState;
 
 public class BreakoutApplication {
 
 	public static final String initMap = """
 ##########
 ##########
-#######SS#
+#######RR#
 #######!##
      o
 

@@ -10,8 +10,9 @@ package breakout;
 public class NormalBlockState extends BlockState{
 	
 	/**
-	 * Construct a block occupying a given rectangle in the field.
+	 * Construct a normal block occupying a given rectangle in the field.
 	 * @pre | location != null
+	 * @pre | (hits < 4) && (hits > -2)
 	 * @post | getLocation().equals(location)
 	 */
 	public NormalBlockState(Rect location, int hits) {
@@ -21,7 +22,8 @@ public class NormalBlockState extends BlockState{
 	@Override 
 	/**
 	 * Return a copy of this block.
-	 * @return
+	 * @creates result 
+	 * @post | (result.getLocation() == this.getLocation()) && (result.getHits() == this.getHits())
 	 */
 	public BlockState makeCopyBlock(int change) {
 		return new NormalBlockState(getLocation(), getHits());
