@@ -191,7 +191,11 @@ public class BreakoutState {
 			ball.setVelocity(nspeed);
 			Point ncenter = ball.getLocation().getCenter().plus(nspeed);
 			ball.setLocation(ball.getLocation().withCenter(ncenter));
+			int tempBallsLength = this.balls.length;
 			this.balls=this.paddle.replicateBall(ball,this.balls);
+			if(tempBallsLength < this.balls.length) {
+				this.paddle = this.paddle.incrementPaddleHits(this.paddle);
+			}
 			this.paddle=this.paddle.setTypePaddle(this.paddle.getCenter(),getField());
 
 
