@@ -196,67 +196,74 @@ public class BreakoutState {
 	}
 
 	private Ball collideBallPaddle(Ball ball, Vector paddleVel) {
-		Vector nspeed = ball.bounceOn(this.paddle.getLocation(), true);
+		Vector nspeed = ball.bounceOn(this.paddle.getLocation(), false);
 		if(nspeed != null) {
 			nspeed = nspeed.plus(paddleVel.scaledDiv(5));
 			ball.setVelocity(nspeed);
 			Point ncenter = ball.getLocation().getCenter().plus(nspeed);
 			ball.setLocation(ball.getLocation().withCenter(ncenter));
+			this.balls=this.paddle.replicateBall(ball,this.balls,this.paddle);
+		}
+		return ball;
+				}
+			
+			//if replicateBall()==true {
+				//this.balls = ball.createballs(this.balls,ball,
 
 //			if(this.paddle.getPaddleType()=='R') {
 
-				switch(this.paddle.getHits()) {
-				case 0: 
-					//					Ball newBall1 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					//					Ball newBall2 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
-					//					Ball newBall3 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2, 2)));
-					//					ArrayList<Ball> tempBallsList1 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					//					tempBallsList1.add(newBall1);
-					//					tempBallsList1.add(newBall2);
-					//					tempBallsList1.add(newBall3);
-					//					this.balls = tempBallsList1.toArray(balls);
-					//					this.paddle.hitPaddle(this.paddle.getHits());
-					createBalls(new Vector(2,-2), ball);
-					createBalls(new Vector(-2,2), ball);
-					createBalls(new Vector(2,2), ball);
-					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
-					break;
-				case 1: 
-					//					Ball newBall4 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					//					Ball newBall5 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
-					//					ArrayList<Ball> tempBallsList2 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					//					tempBallsList2.add(newBall4);
-					//					tempBallsList2.add(newBall5);
-					//					this.balls = tempBallsList2.toArray(balls);
-					//					this.paddle.hitPaddle(this.paddle.getHits());
-					createBalls(new Vector(2, -2), ball);
-					createBalls(new Vector(-2, 2), ball);
-					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
-					break;
-				case 2: 
-					//					Ball newBall6 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
-					//					ArrayList<Ball> tempBallsList3 = new ArrayList<Ball>(Arrays.asList(getBalls()));
-					//					tempBallsList3.add(newBall6);
-					//					this.balls = tempBallsList3.toArray(balls);
-					//					this.paddle.hitPaddle(this.paddle.getHits());
-					createBalls(new Vector(2, -2), ball);
-					this.paddle = new PaddleState(this.paddle.getCenter(), 0);
-					break;
-				default:
-					this.paddle= new PaddleState(this.paddle.getCenter(), this.paddle.getHits());
-					break;
-				}
+//				switch(this.paddle.getHits()) {
+//				case 0: 
+//					//					Ball newBall1 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					//					Ball newBall2 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
+//					//					Ball newBall3 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2, 2)));
+//					//					ArrayList<Ball> tempBallsList1 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					//					tempBallsList1.add(newBall1);
+//					//					tempBallsList1.add(newBall2);
+//					//					tempBallsList1.add(newBall3);
+//					//					this.balls = tempBallsList1.toArray(balls);
+//					//					this.paddle.hitPaddle(this.paddle.getHits());
+//					createBalls(new Vector(2,-2), ball);
+//					createBalls(new Vector(-2,2), ball);
+//					createBalls(new Vector(2,2), ball);
+//					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
+//					break;
+//				case 1: 
+//					//					Ball newBall4 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					//					Ball newBall5 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(-2, 2)));
+//					//					ArrayList<Ball> tempBallsList2 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					//					tempBallsList2.add(newBall4);
+//					//					tempBallsList2.add(newBall5);
+//					//					this.balls = tempBallsList2.toArray(balls);
+//					//					this.paddle.hitPaddle(this.paddle.getHits());
+//					createBalls(new Vector(2, -2), ball);
+//					createBalls(new Vector(-2, 2), ball);
+//					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
+//					break;
+//				case 2: 
+//					//					Ball newBall6 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
+//					//					ArrayList<Ball> tempBallsList3 = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//					//					tempBallsList3.add(newBall6);
+//					//					this.balls = tempBallsList3.toArray(balls);
+//					//					this.paddle.hitPaddle(this.paddle.getHits());
+//					createBalls(new Vector(2, -2), ball);
+//					this.paddle = new PaddleState(this.paddle.getCenter(), 0);
+//					break;
+//				default:
+//					this.paddle= new PaddleState(this.paddle.getCenter(), this.paddle.getHits());
+//					break;
+//				}
+//
+//
+//		}
+//		return ball;}
 
-
-		}
-		return ball;}
-
-	private void createBalls(Vector speed, Ball originalBall) {
-		Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
-		ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(getBalls()));
-		tempBallsList.add(newBall);
-		this.balls = tempBallsList.toArray(balls);
-	}
+//	private void createBalls(Vector speed, Ball originalBall) {
+//		Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
+//		ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(getBalls()));
+//		tempBallsList.add(newBall);
+//		this.balls = tempBallsList.toArray(balls);
+//	}
 
 	private boolean removeBlock(BlockState block) {
 		boolean broken = true;
@@ -284,7 +291,6 @@ public class BreakoutState {
 	 * @mutates this
 	 */
 	//Make sure to go back and look at this today 
-	private long totalTime =0;
 	public void tick(int paddleDir, int elapsedTime) {
 
 		stepBalls();
@@ -297,7 +303,7 @@ public class BreakoutState {
 			if(balls[i] != null) {
 				if (balls[i].checkElapsedTime(elapsedTime) == true) {
 					this.balls[i] = new NormalBall(this.balls[i].getLocation(), this.balls[i].getVelocity());
-				};
+				}
 			}
 		
 		balls = Arrays.stream(balls).filter(x -> x != null).toArray(Ball[]::new);
@@ -356,7 +362,7 @@ public class BreakoutState {
 	 */
 	public void movePaddleRight(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL);
-		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField(), this.paddle.getHits());
+		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 //		if(this.paddle.getPaddleType()=='R') {
 //			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
@@ -377,7 +383,7 @@ public class BreakoutState {
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleLeft(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
-		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField(), this.paddle.getHits());
+		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 //		if(this.paddle.getPaddleType()=='R') {
 //			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));

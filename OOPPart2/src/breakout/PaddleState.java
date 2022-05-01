@@ -16,16 +16,16 @@ public class PaddleState {
 	 * @invar | center != null
 	 */
 	private final Point center;
-	protected final int hits;
+	//protected final int hits;
 
 	/**
 	 * Construct a paddle located around a given center in the field.
 	 * @pre | center != null
 	 * @post | getCenter().equals(center)
 	 */
-	public PaddleState(Point center, int hits) {
+	public PaddleState(Point center) {
 		this.center = center;
-		this.hits=hits;
+		//this.hits=hits;
 	}
 	
 	/**
@@ -47,13 +47,13 @@ public class PaddleState {
 		return new Rect(center.plus(halfDiag), center.plus(halfDiag.scaled(-1)));
 	}
 	
-	/**
-	 * Return the number of times this paddle was hit.
-	 * @return
-	 */
-	public int getHits() {
-		return -1;
-	}
+//	/**
+//	 * Return the number of times this paddle was hit.
+//	 * @return
+//	 */
+//	public int getHits() {
+//		return -1;
+//	}
 
 	/**
 	 * Create a new object 
@@ -62,9 +62,14 @@ public class PaddleState {
 	 * @param hits
 	 * @return
 	 */
-	public PaddleState movePaddle(Point ncenter, Rect internalField, int hits) {
-		return new PaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter), hits);
+	public PaddleState movePaddle(Point ncenter, Rect internalField) {
+		return new PaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 	}
+	
+	public Ball[] replicateBall(Ball ball, Ball[] balls, PaddleState paddle) {
+		return balls;
+		
+	};
 	
 	public Color getColor() {
 		return Color.red;

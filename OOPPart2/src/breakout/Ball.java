@@ -1,6 +1,8 @@
 package breakout;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Represents the state of a ball in the breakout game.
@@ -100,6 +102,14 @@ public abstract class Ball {
 	  */
 	 public boolean checkElapsedTime(int elapsedtime) {
 			return false;
+		}
+	 
+	 public Ball[] createBalls(Ball[] balls, Vector speed, Ball originalBall) {
+			Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
+			ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(balls));
+			tempBallsList.add(newBall);
+			balls = tempBallsList.toArray(balls);
+			return balls;
 		}
 
 	 /**

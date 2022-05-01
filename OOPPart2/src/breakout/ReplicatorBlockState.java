@@ -26,7 +26,7 @@ public class ReplicatorBlockState extends BlockState{
 	 */
 	@Override 
 	public PaddleState makePaddle(PaddleState paddle) {
-		return new ReplicatorPaddleState(paddle.getCenter(), paddle.getHits());
+		return new ReplicatorPaddleState(paddle.getCenter(),0);
 	}
 	
 	/**
