@@ -140,7 +140,7 @@ public class BreakoutState {
 	private Ball bounceWalls(Ball b) {
 		Circle loc = b.getLocation();
 		for( Rect wall : walls) {
-			Vector nspeed = b.bounceOn(wall);
+			Vector nspeed = b.bounceOn(wall, false);
 			if( nspeed != null ) {
 				b.setLocation(loc);
 				b.setVelocity(nspeed);
@@ -162,21 +162,29 @@ public class BreakoutState {
 	}
 	
 	private Ball collideBallBlocks(Ball ball) {
-		for(BlockState block : blocks) {
-			Vector nspeed = ball.bounceOn(block.getLocation());
+		for(int i = 0; i<blocks.length; i++) {
+			Vector nspeed = ball.bounceOn(blocks[i].getLocation(), true);
 			if(nspeed != null) {
-				if (block.getBlockType()=='S') {
-					block.hitBlock(1);
-				}
-				if (block.getBlockType()=='!') {
-					ball = new SuperChargedBall(ball.getLocation(), ball.getVelocity(),0);
-
-				}
-				if (block.getBlockType()=='R') {
-					this.paddle=new ReplicatorPaddleState(this.paddle.getCenter());
-				}
-				boolean broken = removeBlock(block);
-				nspeed = ball.hitBlock(block.getLocation(), broken);
+				blocks[i] = blocks[i].makeCopyBlock(1);
+				//block.hitBlock(1);
+				ball = blocks[i].makeSuper(ball);
+				this.paddle = blocks[i].makePaddle(this.paddle);
+//				if (block.getBlockType()=='S') {
+//					block.hitBlock(1);
+//				}
+//				if (block.getBlockType()=='!') {
+//					ball = new SuperChargedBall(ball.getLocation(), ball.getVelocity(),0);
+//
+//				}
+//				if (block.getBlockType()=='R') {
+//					this.paddle=new ReplicatorPaddleState(this.paddle.getCenter());
+//				}
+				Rect tempLocation = blocks[i].getLocation();
+				boolean broken = removeBlock(blocks[i]);
+				
+				nspeed = ball.bounceOn(tempLocation, broken);
+				//System.out.println(nnspeed+" "+nspeed);
+				
 				if(broken == false) {
 					ball = new NormalBall(ball.getLocation(), ball.getVelocity());
 				}
@@ -187,16 +195,15 @@ public class BreakoutState {
 		return ball;
 	}
 
-	//EB: new paddle is created each time it is moved, resetting 'hits' to 0//
 	private Ball collideBallPaddle(Ball ball, Vector paddleVel) {
-		Vector nspeed = ball.bounceOn(this.paddle.getLocation());
+		Vector nspeed = ball.bounceOn(this.paddle.getLocation(), true);
 		if(nspeed != null) {
 			nspeed = nspeed.plus(paddleVel.scaledDiv(5));
 			ball.setVelocity(nspeed);
 			Point ncenter = ball.getLocation().getCenter().plus(nspeed);
 			ball.setLocation(ball.getLocation().withCenter(ncenter));
 
-			if(this.paddle.getPaddleType()=='R') {
+//			if(this.paddle.getPaddleType()=='R') {
 
 				switch(this.paddle.getHits()) {
 				case 0: 
@@ -212,8 +219,7 @@ public class BreakoutState {
 					createBalls(new Vector(2,-2), ball);
 					createBalls(new Vector(-2,2), ball);
 					createBalls(new Vector(2,2), ball);
-					this.paddle.hitPaddle();
-					System.out.println(this.paddle.getHits());
+					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
 					break;
 				case 1: 
 					//					Ball newBall4 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
@@ -225,7 +231,7 @@ public class BreakoutState {
 					//					this.paddle.hitPaddle(this.paddle.getHits());
 					createBalls(new Vector(2, -2), ball);
 					createBalls(new Vector(-2, 2), ball);
-					this.paddle.hitPaddle();
+					this.paddle = new ReplicatorPaddleState(this.paddle.getCenter(), this.paddle.getHits()+1);
 					break;
 				case 2: 
 					//					Ball newBall6 = new NormalBall(ball.getLocation(), ball.getVelocity().plus(new Vector(2,-2)));
@@ -234,13 +240,12 @@ public class BreakoutState {
 					//					this.balls = tempBallsList3.toArray(balls);
 					//					this.paddle.hitPaddle(this.paddle.getHits());
 					createBalls(new Vector(2, -2), ball);
-					this.paddle = new PaddleState(this.paddle.getCenter());
-					this.paddle.hitPaddle();
+					this.paddle = new PaddleState(this.paddle.getCenter(), 0);
 					break;
 				default:
-					//					this.paddle= new PaddleState(this.paddle.getCenter());
+					this.paddle= new PaddleState(this.paddle.getCenter(), this.paddle.getHits());
 					break;
-				}}
+				}
 
 
 		}
@@ -256,7 +261,10 @@ public class BreakoutState {
 	private boolean removeBlock(BlockState block) {
 		boolean broken = true;
 		ArrayList<BlockState> nblocks = new ArrayList<BlockState>();
-		if(block.getBlockType()=='S' && block.getHits()<3) {
+//		if(block.getBlockType()=='S' && block.getHits()<3) {
+//		System.out.println(block.getHits());
+		if(block.getHits()>-1 && block.getHits()<3) {
+		
 			nblocks.toArray(blocks.clone());
 			broken = false;
 		}else {
@@ -275,6 +283,7 @@ public class BreakoutState {
 	 * 
 	 * @mutates this
 	 */
+	//Make sure to go back and look at this today 
 	private long totalTime =0;
 	public void tick(int paddleDir, int elapsedTime) {
 
@@ -345,17 +354,18 @@ public class BreakoutState {
 	 * 
 	 * @mutates this
 	 */
-	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleRight(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL);
-		if(this.paddle.getPaddleType()=='R') {
-			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-			newPaddle.setHits(this.paddle.getHits());
-			this.paddle = newPaddle;
-			//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-		}else {
-			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-		}
+		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField(), this.paddle.getHits());
+		this.paddle = newPaddle;
+//		if(this.paddle.getPaddleType()=='R') {
+//			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//			newPaddle.setHits(this.paddle.getHits());
+//			this.paddle = newPaddle;
+//			//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//		}else {
+//			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//		}
 	}
 
 	/**
@@ -367,16 +377,18 @@ public class BreakoutState {
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleLeft(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
-		if(this.paddle.getPaddleType()=='R') {
-			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-			newPaddle.setHits(this.paddle.getHits());
-			this.paddle = newPaddle;
-			//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-			//			paddle.setHits(paddle.getHits());
-
-		}else { 
-			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
-		}
+		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField(), this.paddle.getHits());
+		this.paddle = newPaddle;
+//		if(this.paddle.getPaddleType()=='R') {
+//			ReplicatorPaddleState newPaddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//			newPaddle.setHits(this.paddle.getHits());
+//			this.paddle = newPaddle;
+//			//			paddle = new ReplicatorPaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//			//			paddle.setHits(paddle.getHits());
+//
+//		}else { 
+//			this.paddle = new PaddleState(getField().minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
+//		}
 	}
 
 	/**

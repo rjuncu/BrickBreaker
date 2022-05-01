@@ -1,32 +1,31 @@
 package breakout;
 
+import java.awt.Color;
+
 public class ReplicatorPaddleState extends PaddleState{
 
-	private int hits = 0;
-	public ReplicatorPaddleState(Point center) {
-		super(center);
-		// TODO Auto-generated constructor stub
+	public ReplicatorPaddleState(Point center, int hits) {
+		super(center, hits);
 	}
 	
-	@Override
-	public char getPaddleType() {
-		return 'R';
-	}
-	
-	
-	@Override
-	public void hitPaddle() {
-		this.hits = this.hits+1;
-	}
 	
 	@Override
 	public int getHits() {
 		return this.hits;
 	}
 	
+	
+	@Override 
+	public PaddleState movePaddle(Point ncenter, Rect internalField, int hits) {
+		if(hits == -1) {
+			hits = 0;
+		}
+		return new ReplicatorPaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter), hits);
+	}
+	
 	@Override
-	public void setHits(int hits) {
-		this.hits = hits;
+	public Color getColor() {
+		return Color.green;
 	}
 
 }

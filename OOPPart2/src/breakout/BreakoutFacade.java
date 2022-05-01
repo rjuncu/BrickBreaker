@@ -5,7 +5,7 @@ import java.awt.Color;
 //No documentation required for this class
 public class BreakoutFacade {
 	public PaddleState createNormalPaddleState(Point center) {
-		return new PaddleState(center);
+		return new PaddleState(center, 0);
 	}
 
 	public Ball createNormalBall(Point center, int diameter, Vector initBallVelocity) {
@@ -25,87 +25,53 @@ public class BreakoutFacade {
 
 	public BlockState createNormalBlockState(Point topLeft, Point bottomRight) {
 		Rect location = new Rect(topLeft, bottomRight);
-		return new NormalBlockState(location);
+		return new NormalBlockState(location, 0);
 	}
 
 	public BlockState createSturdyBlockState(Point topLeft, Point bottomRight, int i) {
 		Rect location = new Rect(topLeft, bottomRight);
-		return new SturdyBlockState(location);
+		return new SturdyBlockState(location, 0);
 	}
 
 	public BlockState createReplicatorBlockState(Point topLeft, Point bottomRight) {
 		Rect location = new Rect(topLeft, bottomRight);
-		return new ReplicatorBlockState(location);
+		return new ReplicatorBlockState(location, 0);
 	}
 
 	public BlockState createPowerupBallBlockState(Point topLeft, Point bottomRight) {
 		Rect location = new Rect(topLeft, bottomRight);
-		return new PowerupBallBlockState(location);
+		return new PowerupBallBlockState(location, 0);
 	}
 
 	public Color getColor(PaddleState paddle) {
-		if(paddle.getPaddleType()=='R') {
-			return Color.green;
-		}else {
-			return Color.red;
-		}
+		return paddle.getColor();
 	}
 
 	public Color getColor(Ball ball) {
-		if(ball.getBallType()=='S') {
-			return Color.orange;
-		}else {
-			return Color.magenta;
-		}
-		//return Color.MAGENTA;
+		return ball.getColor();
 	}
 
 	public Rect getLocation(PaddleState paddle) {
-		// TODO
 		return paddle.getLocation();
 	}
 
 	public Point getCenter(Ball ball) {
-		// TODO
 		return ball.getLocation().getCenter();
 	}
 
 	public int getDiameter(Ball ball) {
-		// TODO
 		return 500;
 	}
 
 	public Ball[] getBalls(BreakoutState breakoutState) {
-		// TODO
 		return breakoutState.getBalls();
 	}
 
 	public Color getColor(BlockState block) {
-		switch(block.getBlockType()) {
-		case 'S': 
-			switch(block.getHits()) {
-			case 0:
-				return Color.MAGENTA;
-			case 1: 
-				return Color.red;
-			case 2: 
-				return Color.pink;
-			}
-		case '!': 
-			return Color.green;
-		case 'R':
-			return Color.blue;
-		case '#':
-			return Color.cyan;
-			
-		}
-		return null;
-		
-
+		return block.getColor();
 	}
 
 	public Rect getLocation(BlockState block) {
-		// TODO
 		return block.getLocation();
 	}
 }

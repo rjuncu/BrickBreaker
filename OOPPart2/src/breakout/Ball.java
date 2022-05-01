@@ -1,5 +1,7 @@
 package breakout;
 
+import java.awt.Color;
+
 /**
  * Represents the state of a ball in the breakout game.
  * 
@@ -7,9 +9,8 @@ package breakout;
  * @invar | getVelocity() != null
  */
 public abstract class Ball {
-	//make changes to class logic so that ball is no longer immutable 
-	private Circle location;
-	private Vector velocity;
+	protected Circle location;
+	protected Vector velocity;
 	
 	/**
 	 * Construct a new ball at a given `location`, with a given `velocity`.
@@ -38,11 +39,20 @@ public abstract class Ball {
 		return velocity;
 	}
 	
-	//adding setters since class is now mutable 
+	/**
+	 * Set this ball's location.
+	 * @param newCircle
+	 * @mutates | this.getLocation()
+	 */
 	public void setLocation(Circle newCircle) {
 		this.location = newCircle;
 	}
 	
+	/**
+	 * Set this ball's velocity.
+	 * @param newVelocity
+	 * @mutates | this.getVelocity()
+	 */
 	public void setVelocity(Vector newVelocity) {
 		this.velocity = newVelocity;
 	}
@@ -56,7 +66,7 @@ public abstract class Ball {
 	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null) || 
 	 *       | (result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))))
 	 */
-	public Vector bounceOn(Rect rect) {
+	public Vector bounceOn(Rect rect, boolean notUsed) {
 		Vector coldir = rect.collideWith(location);
 		if(coldir != null && velocity.product(coldir) > 0) {
 			return velocity.mirrorOver(coldir);
@@ -66,23 +76,37 @@ public abstract class Ball {
 
 	/**
 	 * Return this point's center.
-	 * 
 	 * @post | getLocation().getCenter().equals(result)
 	 */
 	public Point getCenter() {
 		return getLocation().getCenter();
 	}
 	
-	 public Vector hitBlock(Rect rect, boolean destroyed) {
-		 return bounceOn(rect);
-	 }
+//	/**
+//	 * Mirror this ball's velocity when colliding with a block.
+//	 * @param rect
+//	 * @param destroyed
+//	 * @return
+//	 */
+//	 public Vector hitBlock(Rect rect, boolean destroyed) {
+//		 System.out.println(bounceOn(rect));
+//		 return bounceOn(rect);
+//	 }
 	 
-	 public char getBallType() {
-		 return 'X';
-	 }
-	 
+	 /**
+	  * Return false since this block object does not require a timer.
+	  * @param elapsedtime
+	  * @return
+	  */
 	 public boolean checkElapsedTime(int elapsedtime) {
 			return false;
 		}
 
+	 /**
+	  * Return this ball's color.
+	  * @return
+	  */
+	 public Color getColor() {
+		 return Color.magenta;
+	 }
 }
