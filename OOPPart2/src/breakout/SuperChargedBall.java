@@ -9,6 +9,7 @@ import java.util.Arrays;
  * 
  * @invar | getLocation() != null
  * @invar | getVelocity() != null
+ * @invar | getTotalElapsedTime() >= 0
  */
 public class SuperChargedBall extends Ball{
 
@@ -19,9 +20,10 @@ public class SuperChargedBall extends Ball{
 	 * 
 	 * @pre | location != null
 	 * @pre | velocity != null
-	 * @pre | totalElapsedTime != -1
+	 * @pre | totalElapsedTime >= 0
 	 * @post | getLocation() == location
 	 * @post | getVelocity().equals(velocity) 
+	 * @post | getTotalElapsedTime() == totalElapsedTime
 	 */
 	public SuperChargedBall(Circle location, Vector velocity, int totalElapsedTime) {
 		super(location, velocity);
@@ -29,16 +31,28 @@ public class SuperChargedBall extends Ball{
 	}
 	
 	/**
-	 * Check whether this ball collides with a given `rect` and if so, return the 
-	 * new velocity this ball will have after bouncing on the given rect. If the rect was not
-	 * destroyed (destroyed == false) then this ball will return to normal state.
+	 * Return the total elapsed time of the supercharged ball
+	 */
+	public int getTotalElapsedTime() {
+		return totalElapsedTime;
+	}
+	
+	/**
+	 * Check whether this superchargedball collides with a given `rect` and if so, return the 
+	 * new velocity for the ball. If the rect was not destroyed (destroyed == false) then this 
+	 * ball will bounce back. If the rect was destroyed, the velocity remains unchanged.
 	 * 
 	 * @pre | rect != null
 	 * @pre | destroyed == true || destroyed == false
 	 * @post | (rect.collideWith(getLocation()) == null && result == null) ||
 	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null)
-	 * @post | (destroyed == false) && (result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))))
-	 * @post | (destroyed == true) && (result.equals(getVelocity()))
+	 * @post | destroyed == false ? result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))) 
+	 *			|: (result.equals(getVelocity()))
+	 * @return returns a new velocity if the ball collides with a given 'rect' and returns null if it does not
+	 * 		| (rect.collideWith(getLocation()) != null && getVelocity().product(rect.collideWith(getLocation())) > 0) == true 
+	 * 		|	? result.equals(getVelocity())|| result.equals(getVelocity().product(rect.collideWith(getLocation()))) 
+	 * 		|	: result.equals(null)
+	 * 
 	 */
 	@Override
 	public Vector bounceOn(Rect rect, boolean destroyed) {
@@ -56,12 +70,14 @@ public class SuperChargedBall extends Ball{
 		return null;
 	}
 
-
-	//feed and return the ball instead?
 	/**
+	 * Returns true if the elapsed time is over 10seconds and false if not.
 	 * @param elaspedtime
-	 * @return result 
+	 * @pre | elapsedtime >= 0 
 	 * @post | (result == true) || (result == false)
+	 * @post | getTotalElapsedTime() >= 10000 ? result==true : result==false
+	 * @return boolean
+	 * 
 	 */
 	@Override
 	public boolean checkElapsedTime(int elapsedtime) {
@@ -73,6 +89,18 @@ public class SuperChargedBall extends Ball{
 		}
 	}
 	
+	/**
+	 * Adds a new ball to the balls array and returns it.
+	 * @param balls
+	 * @param speed
+	 * @param originalBall
+	 * @pre balls != null
+	 * @pre speed != null
+	 * @pre originalBall != null
+	 * @post new(balls.length) == old(balls.length)+1
+	 * 
+	 * 
+	 */
 	@Override
 	public Ball[] createBalls(Ball[] balls, Vector speed, Ball originalBall) {
 			Ball newBall = new SuperChargedBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed), totalElapsedTime);

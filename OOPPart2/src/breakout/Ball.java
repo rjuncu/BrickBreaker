@@ -63,12 +63,14 @@ public abstract class Ball {
 	 * Check whether this ball collides with a given `rect` and if so, return the 
 	 * new velocity this ball will have after bouncing on the given rect.
 	 * 
+	 * @param rect
+	 * @param destroyed
 	 * @pre | rect != null
 	 * @post | (rect.collideWith(getLocation()) == null && result == null) ||
 	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null) || 
 	 *       | (result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))))
 	 */
-	public Vector bounceOn(Rect rect, boolean notUsed) {
+	public Vector bounceOn(Rect rect, boolean destroyed) {
 		Vector coldir = rect.collideWith(location);
 		if(coldir != null && velocity.product(coldir) > 0) {
 			return velocity.mirrorOver(coldir);
@@ -88,12 +90,22 @@ public abstract class Ball {
 	 /**
 	  * Return false since this block object does not require a timer.
 	  * @param elapsedtime
-	  * @return
+	  * @return false
 	  */
 	 public boolean checkElapsedTime(int elapsedtime) {
 			return false;
 		}
 	 
+	 /**
+	  * 
+	  * @param balls
+	  * @param speed
+	  * @param originalBall
+	  * @pre balls != null
+	  * @pre speed != null
+	  * @pre originalBall != null
+	  * @post new(balls.length) == old(balls.length)+1
+	  */
 	 public Ball[] createBalls(Ball[] balls, Vector speed, Ball originalBall) {
 			Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
 			ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(balls));
