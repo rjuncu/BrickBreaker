@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import breakout.BreakoutState;
 import breakout.GameMap;
+import breakout.NormalBlockState;
 
 public class BreakoutApplication {
 
@@ -12,7 +13,7 @@ public class BreakoutApplication {
 ##########
 ##########
 #######SS#
-#######!##
+#######R##
      o
 
      =

@@ -14,6 +14,7 @@ public class SturdyBlockState extends BlockState{
 	/**
 	 * Construct a block occupying a given rectangle in the field.
 	 * @pre | location != null
+	 * @pre | (hits < 4) && (hits > -2)
 	 * @post | getLocation().equals(location)
 	 */
 	public SturdyBlockState(Rect location, int hits) {
@@ -22,7 +23,8 @@ public class SturdyBlockState extends BlockState{
 	
 	/**
 	 * Return the number of times this block has been hit. 
-	 * @return
+	 * @return result 
+	 * @post | result == this.getHits()
 	 */
 	@Override 
 	public int getHits() {
@@ -31,7 +33,8 @@ public class SturdyBlockState extends BlockState{
 	
 	/**
 	 * Return this block's color.
-	 * @return
+	 * @return result 
+	 * @post | result != null
 	 */
 	@Override
 	public Color getColor() {
@@ -49,7 +52,10 @@ public class SturdyBlockState extends BlockState{
 	@Override 
 	/**
 	 * Return a copy of this block.
-	 * @return
+	 * @creates result 
+	 * @param change
+	 * @pre | change > 0 
+	 * @post | (result.getLocation() == this.getLocation()) && (result.getHits() == this.getHits()+change)
 	 */
 	public BlockState makeCopyBlock(int change) {
 		//System.out.println(getHits());

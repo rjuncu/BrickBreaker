@@ -20,7 +20,7 @@ public abstract class BlockState {
 	/**
 	 * Construct a block occupying a given rectangle in the field.
 	 * @pre | location != null
-	 * 
+	 * @pre | (hits < 4) && (hits > -2)
 	 * @post | getLocation().equals(location)
 	 */
 	public BlockState(Rect location, int hits) {
@@ -30,14 +30,17 @@ public abstract class BlockState {
 
 	/**
 	 * Return the rectangle occupied by this block in the field.
+	 * @return result 
+	 * @post | result != null
 	 */
 	public Rect getLocation() {
 		return location;
 	}
 	
 	/**
-	 * Return the number of times this block has been hit. 
-	 * @return
+	 * Return a flag to indicate that this block type is not a sturdy block. 
+	 * @return result
+	 * @post | result == -1
 	 */
 	public int getHits() {
 		return -1;
@@ -63,7 +66,8 @@ public abstract class BlockState {
 	
 	/**
 	 * Return this block's color.
-	 * @return
+	 * @return result 
+	 * @post | result != null
 	 */
 	public Color getColor() {
 		return Color.cyan;
@@ -71,7 +75,8 @@ public abstract class BlockState {
 	
 	/**
 	 * Return a copy of this block.
-	 * @return
+	 * @return result 
+	 * @post | result != null
 	 */
 	public BlockState makeCopyBlock(int change) {
 		return this;

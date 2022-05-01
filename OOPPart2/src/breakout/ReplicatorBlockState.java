@@ -13,6 +13,7 @@ public class ReplicatorBlockState extends BlockState{
 	/**
 	 * Construct a block occupying a given rectangle in the field.
 	 * @pre | location != null
+	 * @pre | (hits < 4) && (hits > -2)
 	 * @post | getLocation().equals(location)
 	 */
 	public ReplicatorBlockState(Rect location, int hits) {
@@ -23,6 +24,8 @@ public class ReplicatorBlockState extends BlockState{
 	 * Return an object of class ReplicatorPaddleState.
 	 * @param paddle
 	 * @creates | result
+	 * @pre | paddle != null
+	 * @post | result.getCenter() == paddle.getCenter()
 	 */
 	@Override 
 	public PaddleState makePaddle(PaddleState paddle) {
@@ -31,7 +34,8 @@ public class ReplicatorBlockState extends BlockState{
 	
 	/**
 	 * Return this block's color.
-	 * @return
+	 * @return result 
+	 * @post | result != null 
 	 */
 	@Override
 	public Color getColor() {
@@ -41,7 +45,8 @@ public class ReplicatorBlockState extends BlockState{
 	@Override 
 	/**
 	 * Return a copy of this block.
-	 * @return
+	 * @creates result
+	 * @post | result.getLocation() == this.getLocation()
 	 */
 	public BlockState makeCopyBlock(int change) {
 		return new ReplicatorBlockState(getLocation(), getHits());
