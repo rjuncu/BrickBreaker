@@ -83,7 +83,7 @@ public abstract class Ball {
 	public Point getCenter() {
 		return getLocation().getCenter();
 	}
-	
+
 	 
 	 /**
 	  * Return false since this block object does not require a timer.

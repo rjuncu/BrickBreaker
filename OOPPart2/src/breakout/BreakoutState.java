@@ -166,7 +166,6 @@ public class BreakoutState {
 			Vector nspeed = ball.bounceOn(blocks[i].getLocation(), true);
 			if(nspeed != null) {
 				blocks[i] = blocks[i].makeCopyBlock(1);
-
 				ball = blocks[i].makeSuper(ball);
 				this.paddle = blocks[i].makePaddle(this.paddle);
 
@@ -175,9 +174,9 @@ public class BreakoutState {
 				
 				nspeed = ball.bounceOn(tempLocation, broken);
 				
-				if(broken == false) {
-					ball = new NormalBall(ball.getLocation(), ball.getVelocity());
-				}
+//				if(broken == false) {
+//					ball = new NormalBall(ball.getLocation(), ball.getVelocity());
+//				}
 				ball.setVelocity(nspeed);
 				return ball;
 			}
@@ -192,7 +191,9 @@ public class BreakoutState {
 			ball.setVelocity(nspeed);
 			Point ncenter = ball.getLocation().getCenter().plus(nspeed);
 			ball.setLocation(ball.getLocation().withCenter(ncenter));
-			this.balls=this.paddle.replicateBall(ball,this.balls,this.paddle);
+			this.balls=this.paddle.replicateBall(ball,this.balls);
+			this.paddle=this.paddle.setTypePaddle(this.paddle.getCenter(),getField());
+
 
 		}
 		return ball;
@@ -292,7 +293,7 @@ public class BreakoutState {
 	 */
 	public void movePaddleRight(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL);
-		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField());
+		PaddleState newPaddle = this.paddle.setTypePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 	}
 
@@ -305,7 +306,7 @@ public class BreakoutState {
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleLeft(int elapsedTime) {
 		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
-		PaddleState newPaddle = this.paddle.movePaddle(ncenter, getField());
+		PaddleState newPaddle = this.paddle.setTypePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 	}
 

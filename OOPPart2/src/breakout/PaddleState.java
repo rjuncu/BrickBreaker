@@ -62,11 +62,11 @@ public class PaddleState {
 	 * @param hits
 	 * @return
 	 */
-	public PaddleState movePaddle(Point ncenter, Rect internalField) {
+	public PaddleState setTypePaddle(Point ncenter, Rect internalField) {
 		return new PaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
 	}
 	
-	public Ball[] replicateBall(Ball ball, Ball[] balls, PaddleState paddle) {
+	public Ball[] replicateBall(Ball ball, Ball[] balls) {
 		return balls;
 		
 	};

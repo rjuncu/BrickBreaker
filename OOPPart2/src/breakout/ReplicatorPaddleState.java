@@ -19,7 +19,7 @@ public class ReplicatorPaddleState extends PaddleState{
 	
 	
 	@Override 
-	public PaddleState movePaddle(Point ncenter, Rect internalField) {
+	public PaddleState setTypePaddle(Point ncenter, Rect internalField) {
 		if (getHits()<3) {
 		return new ReplicatorPaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter), getHits());
 	} else {
@@ -27,9 +27,8 @@ public class ReplicatorPaddleState extends PaddleState{
 	}}
 	
 	
-	
 	@Override
-	public Ball[] replicateBall(Ball ball, Ball[] balls, PaddleState paddle) {
+	public Ball[] replicateBall(Ball ball, Ball[] balls) {
 		switch(getHits()) {
 		case 0: 
 			balls =ball.createBalls(balls, new Vector(2,-2), ball);
@@ -47,7 +46,6 @@ public class ReplicatorPaddleState extends PaddleState{
 			hits++;
 			break;
 		}
-		//paddle.movePaddle(paddle.getCenter(),new Rect(Point.ORIGIN, BreakoutState.getBottomRight()));
 		return balls;
 	};
 	

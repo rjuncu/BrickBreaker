@@ -11,8 +11,8 @@ public class BreakoutApplication {
 	public static final String initMap = """
 ##########
 ##########
-##########
-#######R##
+#######SS#
+#######!##
      o
 
      =

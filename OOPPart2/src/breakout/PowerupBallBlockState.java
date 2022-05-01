@@ -46,4 +46,6 @@ public class PowerupBallBlockState extends BlockState{
 	public BlockState makeCopyBlock(int change) {
 		return new PowerupBallBlockState(getLocation(), getHits());
 	}
+	
+	
 }

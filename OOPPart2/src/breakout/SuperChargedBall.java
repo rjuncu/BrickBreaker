@@ -1,6 +1,8 @@
 package breakout;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Represents the state of a ball in the breakout game.
@@ -70,6 +72,16 @@ public class SuperChargedBall extends Ball{
 			return false;
 		}
 	}
+	
+	@Override
+	public Ball[] createBalls(Ball[] balls, Vector speed, Ball originalBall) {
+			Ball newBall = new SuperChargedBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed), totalElapsedTime);
+			ArrayList<Ball> tempBallsList = new ArrayList<Ball>(Arrays.asList(balls));
+			tempBallsList.add(newBall);
+			balls = tempBallsList.toArray(balls);
+			return balls;
+	}
+		
 
 	/**
 	  * Return this ball's color.
