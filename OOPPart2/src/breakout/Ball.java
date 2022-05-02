@@ -66,9 +66,14 @@ public abstract class Ball {
 	 * @param rect
 	 * @param destroyed
 	 * @pre | rect != null
-	 * @post | (rect.collideWith(getLocation()) == null && result == null) ||
-	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null) || 
-	 *       | (result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))))
+	 * @pre | destroyed == true || destroyed == false
+	 * 
+	 * @post | result == null ? rect.collideWith(getLocation()) == null || getVelocity().product(rect.collideWith(getLocation())) <= 0
+	 * 		| : result != null
+	 * 
+//	 * @post | rect.collideWith(getLocation()) == null && result == null ||
+//	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null || 
+//	 *       | (result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))))
 	 */
 	public Vector bounceOn(Rect rect, boolean destroyed) {
 		Vector coldir = rect.collideWith(location);

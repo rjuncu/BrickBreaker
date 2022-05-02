@@ -166,18 +166,21 @@ public class BreakoutState {
 			Vector nspeed = ball.bounceOn(blocks[i].getLocation(), true);
 			if(nspeed != null) {
 				blocks[i] = blocks[i].makeCopyBlock(1);
-				ball = blocks[i].makeSuper(ball);
 				this.paddle = blocks[i].makePaddle(this.paddle);
+				ball = blocks[i].makeSuper(ball);
 
 				Rect tempLocation = blocks[i].getLocation();
 				boolean broken = removeBlock(blocks[i]);
 				
 				nspeed = ball.bounceOn(tempLocation, broken);
 				
+				//ball = blocks[i].makeSuper(ball);
+				
 //				if(broken == false) {
 //					ball = new NormalBall(ball.getLocation(), ball.getVelocity());
 //				}
 				ball.setVelocity(nspeed);
+				
 				return ball;
 			}
 		}
@@ -242,6 +245,7 @@ public class BreakoutState {
 			}
 		
 		balls = Arrays.stream(balls).filter(x -> x != null).toArray(Ball[]::new);
+		
 	}
 	}
 

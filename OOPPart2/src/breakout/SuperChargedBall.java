@@ -44,14 +44,13 @@ public class SuperChargedBall extends Ball{
 	 * 
 	 * @pre | rect != null
 	 * @pre | destroyed == true || destroyed == false
-	 * @post | (rect.collideWith(getLocation()) == null && result == null) ||
-	 *       | (getVelocity().product(rect.collideWith(getLocation())) <= 0 && result == null)
-	 * @post | destroyed == false ? result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))) 
-	 *			|: (result.equals(getVelocity()))
-	 * @return returns a new velocity if the ball collides with a given 'rect' and returns null if it does not
-	 * 		| (rect.collideWith(getLocation()) != null && getVelocity().product(rect.collideWith(getLocation())) > 0) == true 
-	 * 		|	? result.equals(getVelocity())|| result.equals(getVelocity().product(rect.collideWith(getLocation()))) 
-	 * 		|	: result.equals(null)
+	 * @post | rect.collideWith(getLocation()) == null || getVelocity().product(rect.collideWith(getLocation())) <= 0
+	 * 			| ? result == null : result != null
+//	 * @post | result != null && destroyed == false ? result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))) 
+//	 *			|: (result.equals(getVelocity()))
+//	 * @post | rect.collideWith(getLocation()) != null && getVelocity().product(rect.collideWith(getLocation())) > 0  
+//	 * 		|	? result.equals(getVelocity())|| result.equals(getVelocity().product(rect.collideWith(getLocation()))) 
+//	 * 		|	: result.equals(null)
 	 * 
 	 */
 	@Override
