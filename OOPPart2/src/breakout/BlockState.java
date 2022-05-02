@@ -40,7 +40,7 @@ public abstract class BlockState {
 	/**
 	 * Return a flag to indicate that this block type is not a sturdy block. 
 	 * @return result
-//	 * @post | result == -1 this is causing an error
+	 * @post | result >= -1
 	 */
 	public int getHits() {
 		return -1;
