@@ -167,12 +167,13 @@ public class BreakoutState {
 			if(nspeed != null) {
 				blocks[i] = blocks[i].makeCopyBlock(1);
 				this.paddle = blocks[i].makePaddle(this.paddle);
-				ball = blocks[i].makeSuper(ball);
+				Ball newBall = blocks[i].makeSuper(ball);
 
 				Rect tempLocation = blocks[i].getLocation();
 				boolean broken = removeBlock(blocks[i]);
 				
 				nspeed = ball.bounceOn(tempLocation, broken);
+				ball = newBall;
 				
 				//ball = blocks[i].makeSuper(ball);
 				

@@ -12,7 +12,7 @@ public abstract class BlockState {
 	
 	/**
 	 * @invar | location != null
-	 * @invar | hits > -2
+	 * @invar | hits >= 0
 	 */
 	private final Rect location;
 	protected final int hits;
