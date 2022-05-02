@@ -64,15 +64,16 @@ class BlockTest {
 	@Test
 	void testMakePaddle() {
 		assertEquals(pp11, nb1.makePaddle(pp11));
-		assertEquals(rpp11, rb1.makePaddle(pp11));		
+		assertEquals(rpp11.getHits(), rb1.makePaddle(pp11).getHits());	
+		assertEquals(rpp11.getLocation(), rb1.makePaddle(pp11).getLocation());	
 	}
 	
 	@Test
 	void testMakeCopyBlock() {
-		assertEquals(nb1, nb1.makeCopyBlock(0));
-		assertEquals(sb1, sb1.makeCopyBlock(0));
-		assertEquals(pbb1, pbb1.makeCopyBlock(0));
-		assertEquals(rb1, rb1.makeCopyBlock(0));
+		assertEquals(nb1.getLocation(), nb1.makeCopyBlock(0).getLocation());
+		assertEquals(sb1.getHits()+1, sb1.makeCopyBlock(1).getHits());
+		assertEquals(pbb1.getLocation(), pbb1.makeCopyBlock(0).getLocation());
+		assertEquals(rb1.getHits(), rb1.makeCopyBlock(0).getHits());
 	}
 	
 	@Test

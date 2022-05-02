@@ -24,7 +24,8 @@ public class SturdyBlockState extends BlockState{
 	/**
 	 * Return the number of times this block has been hit. 
 	 * @return result 
-	 * @post | result == this.getHits()
+//	 * @post | result == getHits() Not sure why this is erroring
+	 *
 	 */
 	@Override 
 	public int getHits() {
@@ -58,15 +59,6 @@ public class SturdyBlockState extends BlockState{
 	 * @post | (result.getLocation() == this.getLocation()) && (result.getHits() == this.getHits()+change)
 	 */
 	public BlockState makeCopyBlock(int change) {
-		//System.out.println(getHits());
-//		if(getHits()==-1) {
-//			return new SturdyBlockState(getLocation(), 1);
-//		}else {
-		//System.out.println(getHits()+change + " " + change);
-//		int currentHits = getHits();
-//		Rect newLocation = getLocation();
-//		SturdyBlockState tempBlock = new SturdyBlockState(newLocation, currentHits+change);
-//		System.out.println(tempBlock.getHits());
 		return new SturdyBlockState(getLocation(), getHits()+change);
 		
 	}

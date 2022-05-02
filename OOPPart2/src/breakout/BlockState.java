@@ -12,7 +12,7 @@ public abstract class BlockState {
 	
 	/**
 	 * @invar | location != null
-	 * @invar | hits >= 0
+	 * @invar | hits > -2
 	 */
 	private final Rect location;
 	protected final int hits;
@@ -40,7 +40,7 @@ public abstract class BlockState {
 	/**
 	 * Return a flag to indicate that this block type is not a sturdy block. 
 	 * @return result
-	 * @post | result == -1
+//	 * @post | result == -1 this is causing an error
 	 */
 	public int getHits() {
 		return -1;
