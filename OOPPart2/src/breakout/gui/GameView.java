@@ -13,7 +13,7 @@ import breakout.Point;
 
 @SuppressWarnings("serial")
 public class GameView extends JPanel {
-	public static final int ballMoveDelayMillis = 2;
+	public static final int ballMoveDelayMillis = 20;
 
 	public BreakoutState breakoutState;
 	private Timer ballTimer;

@@ -49,6 +49,7 @@ public abstract class BlockState {
 	/**
 	 * Return an object of class Ball.
 	 * @param ball
+	 * @pre | ball != null
 	 * @creates | result
 	 */
 	public Ball makeSuper(Ball ball) {

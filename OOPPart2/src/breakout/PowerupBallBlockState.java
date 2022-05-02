@@ -24,7 +24,7 @@ public class PowerupBallBlockState extends BlockState{
 	 * Return an object of class SuperChargedBall.
 	 * @param ball
 	 * @creates | result
-	 * @pre | ball != null 
+	 * @pre | ball != null
 	 * @post | (result.getLocation() == ball.getLocation()) && (result.getVelocity() == ball.getVelocity())
 	 */
 	@Override

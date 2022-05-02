@@ -9,7 +9,7 @@ public class GameMap {
 	private static final int WIDTH = 50000;
 	private static int BLOCK_LINES = 8;
 	private static int BLOCK_COLUMNS = 10;
-	private static final Vector INIT_BALL_VELOCITY = new Vector(24, 44);
+	private static final Vector INIT_BALL_VELOCITY = new Vector(4, 5);
 	//velocities were squared, but ball speed did not change
 	private static BreakoutFacade facade = new BreakoutFacade();
 
