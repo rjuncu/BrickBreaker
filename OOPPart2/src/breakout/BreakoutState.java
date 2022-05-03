@@ -232,7 +232,7 @@ public class BreakoutState {
 	//Make sure to go back and look at this today 
 	public void tick(int paddleDir, int elapsedTime) {
 
-		stepBalls();
+		stepBalls(elapsedTime);
 		bounceBallsOnWalls();
 		removeDeadBalls();
 		bounceBallsOnBlocks();
@@ -287,9 +287,9 @@ public class BreakoutState {
 		}
 	}
 
-	private void stepBalls() {
+	private void stepBalls(int elapsedTime) {
 		for(int i = 0; i < balls.length; ++i) {
-			Point newcenter = balls[i].getLocation().getCenter().plus(balls[i].getVelocity());
+			Point newcenter = balls[i].getLocation().getCenter().plus(balls[i].getVelocity().scaled(elapsedTime));
 			balls[i].setLocation(balls[i].getLocation().withCenter(newcenter));
 		}
 	}
@@ -301,7 +301,7 @@ public class BreakoutState {
 	 * @mutates this
 	 */
 	public void movePaddleRight(int elapsedTime) {
-		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL);
+		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(elapsedTime));
 		PaddleState newPaddle = this.paddle.setTypePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 	}
@@ -314,7 +314,7 @@ public class BreakoutState {
 	 */
 	//in order to keep the state of the paddle the same, i do type checking, might need to change this when we implement dynamic binding 
 	public void movePaddleLeft(int elapsedTime) {
-		Point ncenter = this.paddle.getCenter().plus(PADDLE_VEL.scaled(-1));
+		Point ncenter = this.paddle.getCenter().minus(PADDLE_VEL.scaled(elapsedTime));
 		PaddleState newPaddle = this.paddle.setTypePaddle(ncenter, getField());
 		this.paddle = newPaddle;
 	}
