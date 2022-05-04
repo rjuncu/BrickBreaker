@@ -14,6 +14,9 @@ class BlockTest {
 	Point p38;
 	Point pm14;
 	
+	Vector v45;
+	Vector vn56;
+	
 	Rect r1138;
 	Rect rm1438;
 	
@@ -36,6 +39,8 @@ class BlockTest {
 		p05 = new Point(0,5);
 		p38 = new Point(3,8);
 		pm14 = new Point(-1,4);
+		v45 = new Vector(4,5);
+		vn56 = new Vector(-5,6);
 		r1138 = new Rect(p11,p38);
 		rm1438 = new Rect(pm14,p38);
 		pp11 = new PaddleState(p11);
@@ -44,6 +49,8 @@ class BlockTest {
 		sb1 = new SturdyBlockState(r1138, h1);
 		pbb1 = new PowerupBallBlockState(rm1438, hm1);
 		rb1 = new ReplicatorBlockState(rm1438, hm1);
+		ball1 = new NormalBall(new Circle(p05,5),v45);
+		sball1 = new SuperChargedBall(new Circle(p05,5),vn56,0);
 	}
 
 	@Test
@@ -78,8 +85,8 @@ class BlockTest {
 	
 	@Test
 	void testMakeSuper(){
-		assertEquals(ball1, nb1.makeSuper(ball1));
-		assertEquals(sball1, pbb1.makeSuper(ball1));
+		assertEquals(ball1.getLocation(), nb1.makeSuper(ball1).getLocation());
+		assertEquals(sball1.getLocation().getCenter().getX(), pbb1.makeSuper(ball1).getLocation().getCenter().getX());
 	}
 
 }
