@@ -95,7 +95,7 @@ public abstract class Ball {
 	 /**
 	  * Return false since this block object does not require a timer.
 	  * @param elapsedtime
-	  * @return false
+	  * @return | false
 	  */
 	 public boolean checkElapsedTime(int elapsedtime) {
 			return false;
@@ -106,10 +106,10 @@ public abstract class Ball {
 	  * @param balls
 	  * @param speed
 	  * @param originalBall
-	  * @pre balls != null
-	  * @pre speed != null
-	  * @pre originalBall != null
-	  * @post new(balls.length) == old(balls.length)+1
+	  * @pre | balls != null
+	  * @pre | speed != null
+	  * @pre | originalBall != null
+	  * @post | Arrays.equals(balls, 0, old(balls).length, old(balls), 0, old(balls).length)
 	  */
 	 public Ball[] createBalls(Ball[] balls, Vector speed, Ball originalBall) {
 			Ball newBall = new NormalBall(originalBall.getLocation(), originalBall.getVelocity().plus(speed));
@@ -121,7 +121,7 @@ public abstract class Ball {
 
 	 /**
 	  * Return this ball's color.
-	  * @return
+	  * @return | result
 	  */
 	 public Color getColor() {
 		 return Color.magenta;

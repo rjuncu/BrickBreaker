@@ -37,7 +37,7 @@ public class PaddleState {
 
 	/**
 	 * Return the rectangle occupied by this paddle in the field.
-	 * 
+	 * @creates | result
 	 * @post | result != null
 	 * @post | result.getTopLeft().equals(getCenter().plus(new Vector(-WIDTH/2,-HEIGHT/2)))
 	 * @post | result.getBottomRight().equals(getCenter().plus(new Vector(WIDTH/2,HEIGHT/2)))
@@ -47,21 +47,15 @@ public class PaddleState {
 		return new Rect(center.plus(halfDiag), center.plus(halfDiag.scaled(-1)));
 	}
 	
-//	/**
-//	 * Return the number of times this paddle was hit.
-//	 * @return
-//	 */
-//	public int getHits() {
-//		return -1;
-//	}
 
 	/**
 	 * Create a new PaddleState object with a desired center.
 	 * @param ncenter
 	 * @param internalField
 	 * @param hits
-	 * @creates result
-	 * @post result.getCenter()==(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter))
+	 * @creates | result
+	 * @post | result.getCenter().getX() == ncenter.getX()  
+	 * @post | result.getCenter().getY() == ncenter.getY()
 	 */
 	public PaddleState setTypePaddle(Point ncenter, Rect internalField) {
 		return new PaddleState(internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter));
@@ -71,7 +65,7 @@ public class PaddleState {
 	 * Return a list of all the objects of type Ball.
 	 * @param ball
 	 * @param balls
-	 * @return result == balls
+	 * @return | balls
 	 */
 	public Ball[] replicateBall(Ball ball, Ball[] balls) {
 		return balls;	
@@ -95,7 +89,7 @@ public class PaddleState {
 	
 	/**
 	 * Return -1 since this paddle does not record hits.
-	 * @return
+	 * @return -1
 	 */
 	public int getHits() {
 		return -1;

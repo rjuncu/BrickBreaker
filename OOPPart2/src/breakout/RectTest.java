@@ -30,6 +30,17 @@ class RectTest {
 		c251 = new Circle(p25,1);
 		c389 = new Circle(p38,9);
 	}
+	
+	@Test
+	void testGetHeight() {
+		assertEquals(r1138.getHeight(), 7);
+	}
+	
+	@Test
+	void testHashCode() {
+		assertEquals(r1138.hashCode(), 34876);
+	}
+
 
 	@Test
 	void testRect() {

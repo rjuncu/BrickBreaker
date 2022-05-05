@@ -46,11 +46,6 @@ public class SuperChargedBall extends Ball{
 	 * @pre | destroyed == true || destroyed == false
 	 * @post | rect.collideWith(getLocation()) == null || getVelocity().product(rect.collideWith(getLocation())) <= 0
 	 * 			| ? result == null : result != null
-//	 * @post | result != null && destroyed == false ? result.equals(getVelocity().mirrorOver(rect.collideWith(getLocation()))) 
-//	 *			|: (result.equals(getVelocity()))
-//	 * @post | rect.collideWith(getLocation()) != null && getVelocity().product(rect.collideWith(getLocation())) > 0  
-//	 * 		|	? result.equals(getVelocity())|| result.equals(getVelocity().product(rect.collideWith(getLocation()))) 
-//	 * 		|	: result.equals(null)
 	 * 
 	 */
 	@Override
@@ -75,7 +70,7 @@ public class SuperChargedBall extends Ball{
 	 * @pre | elapsedtime >= 0 
 	 * @post | (result == true) || (result == false)
 	 * @post | getTotalElapsedTime() >= 10000 ? result==true : result==false
-	 * @return boolean
+	 * @return | boolean
 	 * 
 	 */
 	@Override
@@ -93,11 +88,10 @@ public class SuperChargedBall extends Ball{
 	 * @param balls
 	 * @param speed
 	 * @param originalBall
-	 * @pre balls != null
-	 * @pre speed != null
-	 * @pre originalBall != null
-	 * @post new(balls.length) == old(balls.length)+1
-	 * 
+	 * @pre | balls != null
+	 * @pre | speed != null
+	 * @pre | originalBall != null
+	 * @post | Arrays.equals(balls, 0, old(balls).length, old(balls), 0, old(balls).length)
 	 * 
 	 */
 	@Override
@@ -112,7 +106,8 @@ public class SuperChargedBall extends Ball{
 
 	/**
 	  * Return this ball's color.
-	  * @return
+	  * @return | result
+	  * @post | result != null
 	  */
 	@Override
 	public Color getColor() {

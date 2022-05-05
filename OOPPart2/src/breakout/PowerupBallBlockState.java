@@ -34,7 +34,7 @@ public class PowerupBallBlockState extends BlockState{
 	
 	/**
 	 * Return this block's color.
-	 * @return result 
+	 * @return | result 
 	 * @post | result != null
 	 */
 	@Override
@@ -45,7 +45,7 @@ public class PowerupBallBlockState extends BlockState{
 	@Override 
 	/**
 	 * Return a copy of this block.
-	 * @creates result 
+	 * @creates | result 
 	 * @post | (result.getLocation() == this.getLocation()) && (result.getHits() == this.getHits())
 	 */
 	public BlockState makeCopyBlock(int change) {

@@ -228,8 +228,8 @@ public class BreakoutState {
 	 * Move all moving objects one step forward.
 	 * 
 	 * @mutates this
+	 * 
 	 */
-	//Make sure to go back and look at this today 
 	public void tick(int paddleDir, int elapsedTime) {
 
 		stepBalls(elapsedTime);

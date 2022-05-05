@@ -1,6 +1,10 @@
 package breakout;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.awt.Color;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +18,8 @@ class BallTest {
 	Point p38;
 	Point pm14;
 	
+	Vector v00;
+	
 	Rect r1138;
 	Rect rm1438;
 	
@@ -21,7 +27,9 @@ class BallTest {
 	
 	Circle c052;
 	Circle c389;
+	Circle c119;
 	NormalBall n1;
+	NormalBall n2; 
 	SuperChargedBall s1;
 	
 	Ball[] balls;
@@ -38,11 +46,19 @@ class BallTest {
 		rm1438 = new Rect(pm14,p38);
 		c052 = new Circle(p05,2);
 		c389 = new Circle(p38,9);
+		c119 = new Circle(p11,9);
 		v1010 = new Vector(10,10);
+		v00 = new Vector(0,0);
 		n1 = new NormalBall(c052, v1010);
+		n2 = new NormalBall(c052,v00);
 		s1 = new SuperChargedBall(c389, v1010,ten);
 		balls = new Ball[] {n1,s1};
 
+	}
+	
+	@Test
+	void testGetCenter() {
+		assertEquals(p05, n1.getLocation().getCenter());
 	}
 
 	@Test
@@ -52,10 +68,10 @@ class BallTest {
 		assertEquals(v1010, n1.getVelocity());
 	}
 
-//	@Test
-//	void testBounceOn() {
-//		assertEquals(new Vector(-10,10),n1.bounceOn(r1138));
-//	}
+	@Test
+	void testBounceOn() {
+		assertEquals(null,n2.bounceOn(r1138,true));
+	}
 	
 	@Test
 	void testCheckElapsedTime() {
@@ -68,6 +84,14 @@ class BallTest {
 	@Test
 	void testCreateBalls() {
 		assertEquals(balls.length + 1, (n1.createBalls(balls,v1010,n1)).length);
+		assertEquals(balls.length + 1, (s1.createBalls(balls,v1010,n1)).length);
+		
+	}
+	
+	@Test
+	void testGetColor() {
+		assertEquals(Color.magenta, n1.getColor());
+		assertEquals(Color.orange, s1.getColor());
 		
 	}
 

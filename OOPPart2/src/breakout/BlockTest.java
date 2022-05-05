@@ -2,6 +2,8 @@ package breakout;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Color;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +30,9 @@ class BlockTest {
 	
 	NormalBlockState nb1;
 	SturdyBlockState sb1;
+	SturdyBlockState sb2;
+	SturdyBlockState sb0; 
+	SturdyBlockState sb3;
 	PowerupBallBlockState pbb1;
 	ReplicatorBlockState rb1;
 
@@ -47,6 +52,9 @@ class BlockTest {
 		rpp11 = new ReplicatorPaddleState(p11, 0);
 		nb1 = new NormalBlockState(r1138, hm1);
 		sb1 = new SturdyBlockState(r1138, h1);
+		sb2 = new SturdyBlockState(r1138, 2);
+		sb0 = new SturdyBlockState(r1138, 0);
+		sb3 = new SturdyBlockState(r1138, 3);
 		pbb1 = new PowerupBallBlockState(rm1438, hm1);
 		rb1 = new ReplicatorBlockState(rm1438, hm1);
 		ball1 = new NormalBall(new Circle(p05,5),v45);
@@ -81,6 +89,7 @@ class BlockTest {
 		assertEquals(sb1.getHits()+1, sb1.makeCopyBlock(1).getHits());
 		assertEquals(pbb1.getLocation(), pbb1.makeCopyBlock(0).getLocation());
 		assertEquals(rb1.getHits(), rb1.makeCopyBlock(0).getHits());
+		assertEquals(nb1.makeCopyBlock(0).getHits(), nb1.getHits());
 	}
 	
 	@Test
@@ -88,5 +97,16 @@ class BlockTest {
 		assertEquals(ball1.getLocation(), nb1.makeSuper(ball1).getLocation());
 		assertEquals(sball1.getLocation().getCenter().getX(), pbb1.makeSuper(ball1).getLocation().getCenter().getX());
 	}
+	
+	@Test
+	void testGetColor(){
+		assertEquals(Color.green, pbb1.getColor());
+		assertEquals(Color.cyan, nb1.getColor());
+		assertEquals(Color.red, sb1.getColor());
+		assertEquals(Color.pink, sb2.getColor());
+		assertEquals(Color.MAGENTA, sb0.getColor());
+		assertEquals(Color.MAGENTA, sb3.getColor());	
+	}
+	
 
 }

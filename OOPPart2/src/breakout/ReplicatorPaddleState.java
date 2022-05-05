@@ -33,7 +33,8 @@ public class ReplicatorPaddleState extends PaddleState{
 	 * @param ncenter 
 	 * @param internalField
 	 * @creates result
-	 * @post | result.getCenter() == internalField.minusMargin(PaddleState.WIDTH/2,0).constrain(ncenter)
+	 * @post | result.getCenter().getX() == ncenter.getX()
+	 * @post | result.getCenter().getY() == ncenter.getY()
 	 */
 	@Override 
 	public PaddleState setTypePaddle(Point ncenter, Rect internalField) {
@@ -56,16 +57,13 @@ public class ReplicatorPaddleState extends PaddleState{
 			balls =ball.createBalls(balls, new Vector(2,-2), ball);
 			balls =ball.createBalls(balls, new Vector(-2,2), ball);
 			balls =ball.createBalls(balls, new Vector(2,2), ball);
-			//paddle = new ReplicatorPaddleState(paddle.getCenter(), paddle.getHits()+1);
 			break;
 		case 1: 
 			balls =ball.createBalls(balls,new Vector(2, -2), ball);
 			balls =ball.createBalls(balls,new Vector(-2, 2), ball);
-			//hits++; 
 			break;
 		case 2: 
-			balls=ball.createBalls(balls,new Vector(2, -2), ball);
-			//hits++;
+			balls=ball.createBalls(balls,new Vector(2, -2), ball); 
 			break;
 		}
 		return balls;
